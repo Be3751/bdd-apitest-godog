@@ -4,8 +4,8 @@ Feature: get version
   As an API user
   I need to be able to request version
 
-  Scenario: does not allow POST method
-    When I send "POST" request to "/version"
+  Scenario Outline: does not allow methods other than GET method
+  When I send <Method> request to "/version"
     Then the response code should be 405
     And the response should match json:
       """
@@ -13,6 +13,12 @@ Feature: get version
         "error": "Method not allowed"
       }
       """
+
+    Examples:
+      | Method |
+      | "POST" |
+      | "PUT" |
+      | "DELETE" |
 
   Scenario: should get version number
     When I send "GET" request to "/version"
