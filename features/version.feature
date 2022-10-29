@@ -5,7 +5,7 @@ Feature: get version
   I need to be able to request version
 
   Scenario Outline: does not allow methods other than GET method
-  When I send <Method> request to "/version"
+    When I send <Method> request to "/version"
     Then the response code should be 405
     And the response should match json:
       """

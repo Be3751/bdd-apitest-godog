@@ -73,7 +73,7 @@ func (a *apiFeature) theResponseShouldMatchJSON(body *godog.DocString) (err erro
 	return nil
 }
 
-func InitializeScenario(ctx *godog.ScenarioContext) {
+func InitializeScenarioVersion(ctx *godog.ScenarioContext) {
 	api := &apiFeature{}
 
 	ctx.Before(func(ctx context.Context, sc *godog.Scenario) (context.Context, error) {
