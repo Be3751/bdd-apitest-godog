@@ -1,0 +1,16 @@
+{
+	"message": null,
+	"results": [
+		{
+			"address1": "鳥取県",
+			"address2": "岩美郡岩美町",
+			"address3": "相谷",
+			"kana1": "ﾄｯﾄﾘｹﾝ",
+			"kana2": "ｲﾜﾐｸﾞﾝｲﾜﾐﾁｮｳ",
+			"kana3": "ｱｲﾀﾞﾆ",
+			"prefcode": "31",
+			"zipcode": "6810002"
+		}
+	],
+	"status": 200
+}
