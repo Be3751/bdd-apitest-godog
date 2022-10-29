@@ -1,0 +1,16 @@
+{
+	"message": null,
+	"results": [
+		{
+			"address1": "三重県",
+			"address2": "いなべ市",
+			"address3": "員弁町宇野",
+			"kana1": "ﾐｴｹﾝ",
+			"kana2": "ｲﾅﾍﾞｼ",
+			"kana3": "ｲﾅﾍﾞﾁｮｳｳﾉ",
+			"prefcode": "24",
+			"zipcode": "5110206"
+		}
+	],
+	"status": 200
+}

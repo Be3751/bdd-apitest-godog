@@ -1,0 +1,16 @@
+{
+	"message": null,
+	"results": [
+		{
+			"address1": "鹿児島県",
+			"address2": "薩摩郡さつま町",
+			"address3": "求名",
+			"kana1": "ｶｺﾞｼﾏｹﾝ",
+			"kana2": "ｻﾂﾏｸﾞﾝｻﾂﾏﾁｮｳ",
+			"kana3": "ｸﾞﾐｮｳ",
+			"prefcode": "46",
+			"zipcode": "8952201"
+		}
+	],
+	"status": 200
+}
