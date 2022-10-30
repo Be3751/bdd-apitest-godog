@@ -12,6 +12,6 @@ Feature: get address
 
         Examples:
             | zipcode | filename |
-            | 6810002 | "address01.json" |
-            | 5110206 | "address02.json" |
-            | 8952201 | "address03.json" |
+            | "6810002" | "address01.json" |
+            | "5110206" | "address02.json" |
+            | "8952201" | "address03.json" |
