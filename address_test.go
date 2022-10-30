@@ -2,13 +2,42 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"net/url"
 
 	"github.com/cucumber/godog"
 	"github.com/xeipuuv/gojsonschema"
+
+	"bdd-apitest-godog/util"
 )
 
-func iSendRequest() error {
-	return godog.ErrPending
+var (
+	adrsRespBody   string
+	adrsStatusCode int
+)
+
+func iSendRequestWithTheQueryParam(zipcode string) (err error) {
+	reqParams := url.Values{}
+	reqParams.Add("zipcode", zipcode)
+	actualResp, err := http.PostForm("https://zipcloud.ibsnet.co.jp/api/search", reqParams)
+	if err != nil {
+		return
+	}
+
+	adrsStatusCode = actualResp.StatusCode
+	adrsRespBody, err = util.GetStrRespBody(actualResp.Body)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+func theResponseCodeShouldBe(statusCode int) (err error) {
+	if statusCode != adrsStatusCode {
+		return fmt.Errorf("expected status code was %v, but actually %v", statusCode, adrsStatusCode)
+	}
+	return
 }
 
 func theFieldsOfTheResponseJSONShouldMeetTheRestriction() error {
@@ -44,7 +73,8 @@ func theResponseJSONShouldMatchTheSchema() error {
 }
 
 func InitializeScenarioAddress(ctx *godog.ScenarioContext) {
-	ctx.Step(`^I send request$`, iSendRequest)
+	ctx.Step(`^I send request with the query param "([^"]*)"$`, iSendRequestWithTheQueryParam)
+	ctx.Step(`^the response code should be (\d^)`, theResponseCodeShouldBe)
 	ctx.Step(`^the fields of the response JSON should meet the restriction:$`, theFieldsOfTheResponseJSONShouldMeetTheRestriction)
 	ctx.Step(`^the response JSON should match the JSON file "([^"]*)"$`, theResponseJSONShouldMatchTheJSONFile)
 	ctx.Step(`^the response JSON should match the schema:$`, theResponseJSONShouldMatchTheSchema)
