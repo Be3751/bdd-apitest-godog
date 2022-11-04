@@ -5,7 +5,7 @@ Feature: get address
 
     Scenario Outline: 
         When I send request with the query param <zipcode>
-        Then the response code should be 200 
+        Then the status code should be 200 
         And the fields of the response JSON should meet the restriction:
         And the response JSON should match the schema:
         And the response JSON should match the JSON file <filename>

@@ -2,9 +2,11 @@ module bdd-apitest-godog
 
 go 1.18
 
+require github.com/cucumber/godog v0.12.5
+
 require (
-	github.com/cucumber/godog v0.12.5
-	github.com/xeipuuv/gojsonschema v1.2.0
+	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
+	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 )
 
 require (
@@ -15,7 +17,6 @@ require (
 	github.com/hashicorp/go-memdb v1.3.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
-	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	github.com/stretchr/testify v1.8.1 // indirect
+	github.com/xeipuuv/gojsonschema v1.2.0
 )
