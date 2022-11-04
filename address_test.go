@@ -1,14 +1,13 @@
 package main
 
 import (
+	"bdd-apitest-godog/util"
 	"fmt"
 	"net/http"
 	"net/url"
 
 	"github.com/cucumber/godog"
 	"github.com/xeipuuv/gojsonschema"
-
-	"bdd-apitest-godog/util"
 )
 
 var (
@@ -33,11 +32,8 @@ func iSendRequestWithTheQueryParam(zipcode string) (err error) {
 	return
 }
 
-func theResponseCodeShouldBe(statusCode int) (err error) {
-	if statusCode != adrsStatusCode {
-		return fmt.Errorf("expected status code was %v, but actually %v", statusCode, adrsStatusCode)
-	}
-	return
+func theStatusCodeShouldBe(statusCode int) (err error) {
+	return util.AssertEqual(statusCode, adrsStatusCode)
 }
 
 func theFieldsOfTheResponseJSONShouldMeetTheRestriction() error {
@@ -72,9 +68,9 @@ func theResponseJSONShouldMatchTheSchema() error {
 	return godog.ErrPending
 }
 
-func InitializeScenarioAddress(ctx *godog.ScenarioContext) {
+func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I send request with the query param "([^"]*)"$`, iSendRequestWithTheQueryParam)
-	ctx.Step(`^the response code should be (\d^)`, theResponseCodeShouldBe)
+	ctx.Step(`^the status code should be (\d+)$`, theStatusCodeShouldBe)
 	ctx.Step(`^the fields of the response JSON should meet the restriction:$`, theFieldsOfTheResponseJSONShouldMeetTheRestriction)
 	ctx.Step(`^the response JSON should match the JSON file "([^"]*)"$`, theResponseJSONShouldMatchTheJSONFile)
 	ctx.Step(`^the response JSON should match the schema:$`, theResponseJSONShouldMatchTheSchema)
