@@ -10,12 +10,12 @@ import (
 	"github.com/xeipuuv/gojsonschema"
 )
 
-var (
-	adrsRespBody   string
-	adrsStatusCode int
-)
+type address struct {
+	respBody   string
+	statusCode int
+}
 
-func iSendRequestWithTheQueryParam(zipcode string) (err error) {
+func (adrs *address) iSendRequestWithTheQueryParam(zipcode string) (err error) {
 	reqParams := url.Values{}
 	reqParams.Add("zipcode", zipcode)
 	actualResp, err := http.PostForm("https://zipcloud.ibsnet.co.jp/api/search", reqParams)
@@ -23,8 +23,8 @@ func iSendRequestWithTheQueryParam(zipcode string) (err error) {
 		return
 	}
 
-	adrsStatusCode = actualResp.StatusCode
-	adrsRespBody, err = util.GetStrRespBody(actualResp.Body)
+	adrs.statusCode = actualResp.StatusCode
+	adrs.respBody, err = util.GetStrRespBody(actualResp.Body)
 	if err != nil {
 		return
 	}
@@ -32,19 +32,19 @@ func iSendRequestWithTheQueryParam(zipcode string) (err error) {
 	return
 }
 
-func theStatusCodeShouldBe(statusCode int) (err error) {
-	return util.AssertEqual(statusCode, adrsStatusCode)
+func (adrs *address) theStatusCodeShouldBe(statusCode int) (err error) {
+	return util.AssertEqual(statusCode, adrs.statusCode)
 }
 
-func theFieldsOfTheResponseJSONShouldMeetTheRestriction() error {
+func (adrs *address) theFieldsOfTheResponseJSONShouldMeetTheRestriction() error {
 	return godog.ErrPending
 }
 
-func theResponseJSONShouldMatchTheJSONFile(arg1 string) error {
+func (adrs *address) theResponseJSONShouldMatchTheJSONFile(arg1 string) error {
 	return godog.ErrPending
 }
 
-func theResponseJSONShouldMatchTheSchema() error {
+func (adrs *address) theResponseJSONShouldMatchTheSchema() error {
 	schemaLoader := gojsonschema.NewStringLoader(`{"type":"string"}`)
 
 	fmt.Println("---- Valid JSON")
@@ -69,9 +69,11 @@ func theResponseJSONShouldMatchTheSchema() error {
 }
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
-	ctx.Step(`^I send request with the query param "([^"]*)"$`, iSendRequestWithTheQueryParam)
-	ctx.Step(`^the status code should be (\d+)$`, theStatusCodeShouldBe)
-	ctx.Step(`^the fields of the response JSON should meet the restriction:$`, theFieldsOfTheResponseJSONShouldMeetTheRestriction)
-	ctx.Step(`^the response JSON should match the JSON file "([^"]*)"$`, theResponseJSONShouldMatchTheJSONFile)
-	ctx.Step(`^the response JSON should match the schema:$`, theResponseJSONShouldMatchTheSchema)
+	adrs := address{}
+
+	ctx.Step(`^I send request with the query param "([^"]*)"$`, adrs.iSendRequestWithTheQueryParam)
+	ctx.Step(`^the status code should be (\d+)$`, adrs.theStatusCodeShouldBe)
+	ctx.Step(`^the fields of the response JSON should meet the restriction:$`, adrs.theFieldsOfTheResponseJSONShouldMeetTheRestriction)
+	ctx.Step(`^the response JSON should match the JSON file "([^"]*)"$`, adrs.theResponseJSONShouldMatchTheJSONFile)
+	ctx.Step(`^the response JSON should match the schema:$`, adrs.theResponseJSONShouldMatchTheSchema)
 }
